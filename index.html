@@ -3,25 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interio-A3</title>
+    <title>BMI Calculator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-          theme: {
-            extend: {
-              colors: {
-                clifford: '#da373d',
-              }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: '#da373d',
             }
           }
         }
-      </script>
+      }
+    </script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+      .font-poppins {
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+    </style>
 </head>
-<body>
-  <div class="h-dvh bg-gradient-to-br from-pink-600 to-pink-300 flex justify-center items-center">
-    <h2 class="text-3xl font-black bg-clip-text bg-gradient-to-l from-rose-900 to-teal-900 text-transparent">Hello Tailwind</h2>
-  </div>
+<body class="font-poppins bg-gradient-to-tl from-teal-300 to-blue-300 h-screen flex items-center">
+  <header class="container mx-auto">
+    <div class=" text-center space-y-3">
+      <h1 class="text-slate-900 text-5xl font-black">Calcule Body Mass Index</h1>
+      <p class="text-slate-700 font-medium text-xl pb-6">Stay fit, Stay healty</p>
+      <div class=" max-w-2xl mx-auto space-y-6 px-2">
+        <input type="number" id="weight" placeholder="Weight(kg)" class="input w-full bg-opacity-25 border border-teal-500" required/>
+        <input type="number" id="height" placeholder="Height(ft.inch)" class="input w-full  bg-opacity-25 border border-teal-500" required/>
+      </div>
+      <div class="flex justify-center items-center gap-px">
+      <p id="result" class="text-slate-900 text-center font-medium text-xl"></p>
+      <p id="categoris" class="text-slate-900 text-center text-xl font-semibold"></p></div>
+      <button id="calculateBtn" class=" py-3 px-8 bg-gradient-to-tl  from-red-500 to-orange-500 hover:transition-all hover:duration-500  hover:from-red-600 hover:to-orange-600  rounded-full ease-in-out w-1/2 mx-auto max-w-sm"><span class="font-semibold text-lg text-white">Calculate</span></button>
+    </div>
+    <p class="text-slate-700 text-center bottom-0 fixed left-1/2 -translate-x-1/2">All rights reserved @Parvej Sha labib,2024</p>
+  </header>
+  <script>
+      // Function to calculate BMI
+  function calculateBMI() {
+      // Get input values
+      const weight = parseFloat(document.getElementById("weight").value);
+      const height = parseFloat(document.getElementById("height").value)*0.3048;
+      
+      // Validate input
+      if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+          alert("Please enter valid weight and height values.");
+          return;
+      }
+
+      // Calculate BMI
+      const bmi = weight / (height * height);
+
+      // Determine BMI category
+      let category;
+      if (bmi < 18.5) {
+          category = "Underweight";
+      } else if (bmi >= 18.5 && bmi < 24.9) {
+          category = "Normal weight";
+      } else if (bmi >= 25 && bmi < 29.9) {
+          category = "Overweight";
+      } else {
+          category = "Obese";
+      }
+
+      // Display result
+      //categoris
+      /* document.getElementById("result").innerText = `Your BMI is ${bmi.toFixed(2)}: ${category}`; */
+      document.getElementById("result").innerText = `Your BMI is ${bmi.toFixed(2)} : `;
+      document.getElementById("categoris").innerText = ` ${category}`;
+  }
+
+  // Function to reset the form
+  function resetForm() {
+      document.getElementById("weight").value = '';
+      document.getElementById("height").value = '';
+      document.getElementById("result").innerText = '';
+  }
+
+  // Event listeners for buttons
+  document.getElementById("calculateBtn").addEventListener("click", calculateBMI);
+  document.getElementById("resetBtn").addEventListener("click", resetForm);
+  </script>
 </body>
 </html>
